@@ -1,0 +1,84 @@
+If it shows this error :----->
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+D:\React Native\fourth>npx react-native run-android
+(node:3928) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+8 actionable tasks: 2 executed, 6 up-to-date
+
+info 💡 Tip: Make sure that you have set up your development environment correctly, by running npx react-native doctor. To read more about doctor command visit: https://github.com/react-native-community/cli/blob/main/packages/cli-doctor/README.md#doctor
+
+ERROR: autolinkLibrariesFromCommand: process cmd /c npx @react-native-community/cli config exited with error code: 1
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Settings file 'D:\React Native\fourth\android\settings.gradle' line: 3
+
+* What went wrong:
+A problem occurred evaluating settings 'android'.
+> begin 0, end 1024, length 51
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 6s
+error Failed to install the app. Command failed with exit code 1: gradlew.bat app:installDebug -PreactNativeDevServerPort=8081
+ERROR: autolinkLibrariesFromCommand: process cmd /c npx @react-native-community/cli config exited with error code: 1 FAILURE: Build failed with an exception. * Where: Settings file 'D:\React Native\fourth\android\settings.gradle' line: 3 * What went wrong: A problem occurred evaluating settings 'android'. > begin 0, end 1024, length 51 * Try: > Run with --stacktrace option to get the stack trace. > Run with --info or --debug option to get more log output. > Run with --scan to get full insights. > Get more help at https://help.gradle.org. BUILD FAILED in 6s.
+info Run CLI with --verbose flag for more details.
+
+D:\React Native\fourth>npx @react-native-community/cli config
+(node:2724) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+error Failed to build the app: No package name found. We couldn't parse the namespace from neither your build.gradle[.kts] file at D:\React Native\fourth\node_modules\fourth\android\build.gradle nor your package in the AndroidManifest at D:\React Native\fourth\node_modules\fourth\android\app\src\main\AndroidManifest.xml.
+info Run CLI with --verbose flag for more details.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Fixes : 
+GoTo : 
+Missing or incorrect namespace in build.gradle file:
+
+Starting with Gradle 7.0, Android apps require a namespace instead of a package in the build.gradle file.
+✅ Check your build.gradle file and add the correct namespace.
+
+Example (android/app/build.gradle):
+
+gradle
+Copy code
+android {
+    namespace 'com.yourappname'
+}
+Incorrect or missing package attribute in AndroidManifest.xml: ✅ Open your AndroidManifest.xml and ensure the package attribute is present and matches the namespace.
+
+Example (src/main/AndroidManifest.xml):
+
+xml
+Copy code
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.yourappname">
+📋 Steps to Fix:
+Open android/app/build.gradle and add the namespace:
+
+gradle
+Copy code
+android {
+    namespace 'com.yourappname'
+}
+Open src/main/AndroidManifest.xml and ensure the package is correct:
+
+xml
+Copy code
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.yourappname">
+Sync your project:
+
+Run the following command to clean and rebuild your project:
+bash
+Copy code
+cd android
+./gradlew clean
+cd ..
+npx react-native run-android
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
